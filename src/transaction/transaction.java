@@ -22,6 +22,9 @@ public class transaction {
 
     }   
 
+    UserSearch userSearch = new UserSearch();
+    SaveTrascationIntoFile saveTrascationIntoFile = new SaveTrascationIntoFile(this.transactionmodel);
+    ChangeBalanceById changeBalanceById = new ChangeBalanceById();
     
     
 
@@ -34,8 +37,7 @@ public class transaction {
         int sender_id = this.transactionmodel.getSenderId();
         int receiver_id = this.transactionmodel.getReceiverId();
 
-        UserSearch userSearch = new UserSearch();
-        SaveTrascationIntoFile saveTrascationIntoFile = new SaveTrascationIntoFile(this.transactionmodel);
+        
 
 
 
@@ -45,7 +47,7 @@ public class transaction {
 
         // here we will get the sender balance from the file and check if the sender has enough balance to send money
 
-        ChangeBalanceById changeBalanceById = new changeBalanceById();
+        
 
         
         if(amount>0 && transactionmodel.getSenderId() != transactionmodel.getReceiverId() && sender_balance >= amount){
@@ -75,14 +77,17 @@ public class transaction {
 
     void widthdraw_money(){
         // create a transaction and store it in the file tracnstip.txt
-        sender_id = this.transactionmodel.getSenderId();
-          sender_balance = userSearch.findUserById(sender_id).getBalance();
+        int sender_id = this.transactionmodel.getSenderId();
+        double sender_balance = 0;
+		try {
+			sender_balance = userSearch.findUserById(sender_id).getBalance();
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
             if(amount>0 && sender_balance >= amount){
                changeBalanceById.changeBalanceById(transactionmodel.getSenderId(), sender_balance - this.amount);
                 saveTrascationIntoFile.SaveTransaction();
-//             abcdefgh
-
-
             } else{
                 System.out.println("Transaction failed");
         }
@@ -90,9 +95,17 @@ public class transaction {
 
     void deposit_money(){
         // create a transaction and store it in the file tracnstip.txt
-        reciever_id = this.transactionmodel.getReceiverId();
+        int reciever_id = this.transactionmodel.getReceiverId();
+        double sender_balance = 0;
+        try {
+            sender_balance = userSearch.findUserById(reciever_id).getBalance();
+        } catch (Exception e) {
+        
+            e.printStackTrace();
+        }
+        
         if(amount>0){
-            changeBalanceById.changeBalanceById(transactionmodel.getReceiverId(), reciever_balance + this.amount);
+            changeBalanceById.changeBalanceById(transactionmodel.getReceiverId(), sender_balance + this.amount);
             saveTrascationIntoFile.SaveTransaction();
         }   
      }

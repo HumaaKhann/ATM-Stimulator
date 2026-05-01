@@ -1,18 +1,18 @@
 package utils;
 
-import model.transactionmodel;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.BufferedWriter;
+import model.transactionmodel;
 
 public class SaveTrascationIntoFile {
     transactionmodel transaction; 
 
-    CreateTrascation(transactionmodel transaction) {
+    public SaveTrascationIntoFile(transactionmodel transaction) {
         this.transaction = transaction;
     }
 
-    void SaveTransaction() {
+    public void SaveTransaction() {
         try {
             FileWriter fw = new FileWriter("transaction.txt", true); // true = append mode
             BufferedWriter bw = new BufferedWriter(fw);

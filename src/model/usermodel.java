@@ -11,6 +11,8 @@ public class usermodel {
     private List<transactionmodel> transaction_history;
 
     // Getters and Setters
+    public usermodel() {
+    }
 
     public usermodel(int id, String name, String pin, double balance, List<transactionmodel> transaction_history) {
         this.id = id;
@@ -28,34 +30,37 @@ public class usermodel {
         
     } 
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
      
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
-    void setPin(String pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 
-    void setTransaction_history(List<transactionmodel> transaction_history) {
+    public void setTransaction_history(List<transactionmodel> transaction_history) {
         this.transaction_history = transaction_history;
     }
-    int getId() {
+    public int getId() {
         return id;
     }
-    String getName() {
+    public String getName() {
         return name;
     }
-    String getPin() {
+    public String getPin() {
         return pin;
     }
-    List<transactionmodel> getTransaction_history() {
+    public List<transactionmodel> getTransaction_history() {
         return transaction_history;
     }
-    double getBalance() {
+    public double getBalance() {
         return balance;
+    }
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
 }

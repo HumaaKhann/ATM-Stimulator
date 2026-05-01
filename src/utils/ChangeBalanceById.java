@@ -1,9 +1,10 @@
 package utils;
+import model.usermodel;
 
 public class ChangeBalanceById {
 
 
-        void changeBalanceById(int id, double balance){
+        public void changeBalanceById(int id, double balance){
             
         //fetch user by Id --> function in userSearch class
         //delete user details from file by creating a function for it
@@ -25,7 +26,7 @@ public class ChangeBalanceById {
 
         //save user
         
-        UserFileUtil userFileUtil = new userFileUtil();
+        UserFileUtil userFileUtil = new UserFileUtil();
         userFileUtil.saveUser(user);
 
 
