@@ -83,4 +83,7 @@ public class transactionmodel {
     public void setSenderName(String senderName) {
         this.senderName = senderName;
     }
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }
