@@ -84,9 +84,9 @@ public class transaction {
 >>>>>>> 45597fd (complete send_money function)
 
             System.out.println("Transaction successful");
-      }
-    
-
+      }  else{
+            System.out.println("Transaction failed");
+        }
     }
 
 
