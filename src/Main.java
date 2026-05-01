@@ -45,7 +45,7 @@ public class Main {
 
         System.out.println("Login successful!");
 
-        TransactionInterface t = new TransactionImpl();
+        
 
         while (true) {
 
@@ -54,7 +54,8 @@ public class Main {
             System.out.println("2. Withdraw");
             System.out.println("3. Send Money");
             System.out.println("4. Mini Statement");
-            System.out.println("5. Exit");
+            System.out.println("5. Check Balance");
+            System.out.println("6. Exit");
 
             int choice = sc.nextInt();
 
@@ -85,6 +86,10 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Check balance logic here");
+                    break;
+                    
+                case 6:
                     System.out.println("Thank you!");
                     return;
 
@@ -93,5 +98,5 @@ public class Main {
             }
         }
     }
-    
+
 }
