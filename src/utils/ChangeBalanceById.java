@@ -1,4 +1,5 @@
 package utils;
+import utils *; 
 
 public class ChangeBalanceById {
 
@@ -12,6 +13,24 @@ public class ChangeBalanceById {
         usermodel user = new usermodel();   
         UserSearch userSearch = new UserSearch();
         user= userSearch.findUserById(id);
+
+
+        DeleteUserById deleteUserById = new DeleteUserById();
+        deleteUserById.deleteUserById(id);
+
+
+        
+        //now the updated balance 
+
+        user.setBalance(balance);
+
+        //save user
+        
+        UserFileUtil userFileUtil = new userFileUtil();
+        userFileUtil.saveUser(user);
+
+
+
         }
 }
 
