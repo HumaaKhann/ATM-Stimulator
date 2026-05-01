@@ -75,13 +75,27 @@ public class transaction {
 
     void widthdraw_money(){
         // create a transaction and store it in the file tracnstip.txt
+        sender_id = this.transactionmodel.getSenderId();
+          sender_balance = userSearch.findUserById(sender_id).getBalance();
+            if(amount>0 && sender_balance >= amount){
+               changeBalanceById.changeBalanceById(transactionmodel.getSenderId(), sender_balance - this.amount);
+                saveTrascationIntoFile.SaveTransaction();
+//             abcdefgh
+
+
+            } else{
+                System.out.println("Transaction failed");
+        }
     }
 
     void deposit_money(){
         // create a transaction and store it in the file tracnstip.txt
-    }
-
-
+        reciever_id = this.transactionmodel.getReceiverId();
+        if(amount>0){
+            changeBalanceById.changeBalanceById(transactionmodel.getReceiverId(), reciever_balance + this.amount);
+            saveTrascationIntoFile.SaveTransaction();
+        }   
+     }
 
 }
 
