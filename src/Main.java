@@ -2,13 +2,18 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
+import mini_statement.miniStatement;
+import model.transactionmodel;
+import model.usermodel;
+import transaction.transaction;
+import utils.*;
 
 
 public class Main {
 
     public static boolean login(int id, int pin) {
 
-    try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+    try (BufferedReader br = new BufferedReader(new FileReader("data/user.txt"))) {
 
         String line;
 
@@ -36,6 +41,10 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+        GenerateId idGenerator = new GenerateId();
+        UserSearch userSearch = new UserSearch();
+        
+
 
         System.out.print("Enter ID: ");
         int id = sc.nextInt();
@@ -49,6 +58,9 @@ public class Main {
         }
 
         System.out.println("Login successful!");
+
+        usermodel user = userSearch.findUserById(id);
+        miniStatement miniStatement = new miniStatement();
 
         
 
@@ -68,13 +80,30 @@ public class Main {
 
                 case 1:
                     System.out.print("Enter amount: ");
-                    double dep = sc.nextDouble();
+                    int deposit = sc.nextInt();
+
+                    transactionmodel td = new transactionmodel(idGenerator.generateRandomId(), 0, id, deposit, java.time.LocalDateTime.now().toString(), user.getName(), "");
+
+                    transaction transaction = new transaction( td , deposit);
+                    transaction.deposit_money();
+
                     System.out.println("Deposit logic here");
                     break;
 
+
+
+
                 case 2:
                     System.out.print("Enter amount: ");
-                    double wd = sc.nextDouble();
+                    int withdrawl_money = sc.nextInt();
+
+                    transactionmodel tw = new transactionmodel(idGenerator.generateRandomId(), id, 0, withdrawl_money, java.time.LocalDateTime.now().toString(), "", user.getName());
+                    
+                    transaction transaction2 = new transaction( tw , withdrawl_money);
+                    transaction2.widthdraw_money();
+
+                     
+
                     System.out.println("Withdraw logic here");
                     break;
 
@@ -82,16 +111,28 @@ public class Main {
                     System.out.print("Enter receiver ID: ");
                     int rid = sc.nextInt();
                     System.out.print("Enter amount: ");
-                    double amt = sc.nextDouble();
+                    int amount = sc.nextInt();
+
+                    transactionmodel ts = new transactionmodel(idGenerator.generateRandomId(), id, rid, amount, java.time.LocalDateTime.now().toString(), user.getName(), userSearch.findUserById(rid).getName());
+
+                    transaction transaction3 = new transaction( ts , amount);
+                    transaction3.send_money();
+
                     System.out.println("Send money logic here");
                     break;
 
                 case 4:
-                    t.showMiniStatement(id);
+                    miniStatement.showMiniStatement(id);
                     break;
 
                 case 5:
                     System.out.println("Check balance logic here");
+                        double balance = new UserFileUtil().checkBalance(id);
+                        if (balance >= 0) {
+                            System.out.println("Your balance is: " + balance);
+                        } else {
+                            System.out.println("Error retrieving balance");
+                        }
                     break;
                     
                 case 6:

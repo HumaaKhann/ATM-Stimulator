@@ -14,7 +14,7 @@ public class SaveTrascationIntoFile {
 
     public void SaveTransaction() {
         try {
-            FileWriter fw = new FileWriter("transaction.txt", true); // true = append mode
+            FileWriter fw = new FileWriter("data/transaction.txt", true); // true = append mode
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Convert object → string

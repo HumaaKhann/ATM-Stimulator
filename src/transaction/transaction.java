@@ -13,22 +13,24 @@ public class transaction {
     int amount;
     transactionmodel transactionmodel;
 
+    UserSearch userSearch;
+    SaveTrascationIntoFile saveTrascationIntoFile;
+    ChangeBalanceById changeBalanceById;
 
-    transaction( transactionmodel transactionmodel,int amount){
+    public transaction(transactionmodel transactionmodel, int amount) {
         // create a transaction and store it in the file tracnstip.txt
         super();
         this.amount = amount;
         this.transactionmodel = transactionmodel;
 
+        this.userSearch = new UserSearch();
+        this.saveTrascationIntoFile = new SaveTrascationIntoFile(this.transactionmodel);
+        this.changeBalanceById = new ChangeBalanceById();
     }   
-
-    UserSearch userSearch = new UserSearch();
-    SaveTrascationIntoFile saveTrascationIntoFile = new SaveTrascationIntoFile(this.transactionmodel);
-    ChangeBalanceById changeBalanceById = new ChangeBalanceById();
     
     
 
-    void send_money(){
+    public void send_money(){
         // create a transaction and store it in the file tracnstip.txt
 
         transactionmodel.setAmount(amount);
@@ -75,7 +77,7 @@ public class transaction {
 
     //TODOfor huma khan 
 
-    void widthdraw_money(){
+    public void widthdraw_money(){
         // create a transaction and store it in the file tracnstip.txt
         int sender_id = this.transactionmodel.getSenderId();
         double sender_balance = 0;
@@ -93,7 +95,7 @@ public class transaction {
         }
     }
 
-    void deposit_money(){
+    public void deposit_money(){
         // create a transaction and store it in the file tracnstip.txt
         int reciever_id = this.transactionmodel.getReceiverId();
         double sender_balance = 0;
@@ -111,4 +113,3 @@ public class transaction {
      }
 
 }
-

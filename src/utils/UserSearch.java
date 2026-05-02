@@ -10,7 +10,7 @@ public class UserSearch {
     public  usermodel findUserById(int searchId) {
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("data/user.txt"));
             String line;
 
             while ((line = reader.readLine()) != null) {

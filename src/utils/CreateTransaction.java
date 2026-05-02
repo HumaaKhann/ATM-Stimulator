@@ -5,16 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
 
-public class CreateTrascation {
+public class CreateTransaction {
     transactionmodel transaction; 
 
-    CreateTrascation(transactionmodel transaction) {
+    public CreateTransaction(transactionmodel transaction) {
         this.transaction = transaction;
     }
 
-    void createTransaction() {
+    public void createTransaction() {
         try {
-            FileWriter fw = new FileWriter("transaction.txt", true); // true = append mode
+            FileWriter fw = new FileWriter("data/transaction.txt", true); // true = append mode
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Convert object → string

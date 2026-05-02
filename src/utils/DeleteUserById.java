@@ -5,8 +5,8 @@ import java.io.*;
 public class DeleteUserById {
 
     public void deleteUserById(int id) {
-        File inputFile = new File("users.txt");
-        File tempFile = new File("temp.txt");
+        File inputFile = new File("data/user.txt");
+        File tempFile = new File("data/temp.txt");
 
         try (
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));

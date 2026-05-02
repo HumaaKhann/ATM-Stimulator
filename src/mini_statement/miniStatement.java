@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class miniStatement {
 
-    void showMiniStatement(int userId) {
+    public void showMiniStatement(int userId) {
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("transaction.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("data/transaction.txt"));
             String line;
 
             System.out.println("Mini Statement for User ID: " + userId);
@@ -53,4 +53,3 @@ public class miniStatement {
     }
 }
     
-
