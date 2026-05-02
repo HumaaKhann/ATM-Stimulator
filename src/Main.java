@@ -82,7 +82,16 @@ public class Main {
                     System.out.print("Enter amount: ");
                     int deposit = sc.nextInt();
 
-                    transactionmodel td = new transactionmodel(idGenerator.generateRandomId(), 0, id, deposit, java.time.LocalDateTime.now().toString(), user.getName(), "");
+                    // receiverId=0 marks a cash deposit for mini statement
+                    transactionmodel td = new transactionmodel(
+                            idGenerator.generateRandomId(),
+                            id,
+                            0,
+                            deposit,
+                            java.time.LocalDateTime.now().toString(),
+                            "CASH",
+                            user.getName()
+                    );
 
                     transaction transaction = new transaction( td , deposit);
                     transaction.deposit_money();
@@ -97,7 +106,16 @@ public class Main {
                     System.out.print("Enter amount: ");
                     int withdrawl_money = sc.nextInt();
 
-                    transactionmodel tw = new transactionmodel(idGenerator.generateRandomId(), id, 0, withdrawl_money, java.time.LocalDateTime.now().toString(), "", user.getName());
+                    // receiverId=1 marks a cash withdrawal for mini statement
+                    transactionmodel tw = new transactionmodel(
+                            idGenerator.generateRandomId(),
+                            id,
+                            1,
+                            withdrawl_money,
+                            java.time.LocalDateTime.now().toString(),
+                            "CASH",
+                            user.getName()
+                    );
                     
                     transaction transaction2 = new transaction( tw , withdrawl_money);
                     transaction2.widthdraw_money();
@@ -113,7 +131,15 @@ public class Main {
                     System.out.print("Enter amount: ");
                     int amount = sc.nextInt();
 
-                    transactionmodel ts = new transactionmodel(idGenerator.generateRandomId(), id, rid, amount, java.time.LocalDateTime.now().toString(), user.getName(), userSearch.findUserById(rid).getName());
+                    transactionmodel ts = new transactionmodel(
+                            idGenerator.generateRandomId(),
+                            id,
+                            rid,
+                            amount,
+                            java.time.LocalDateTime.now().toString(),
+                            userSearch.findUserById(rid).getName(),
+                            user.getName()
+                    );
 
                     transaction transaction3 = new transaction( ts , amount);
                     transaction3.send_money();

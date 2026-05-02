@@ -97,19 +97,22 @@ public class transaction {
 
     public void deposit_money(){
         // create a transaction and store it in the file tracnstip.txt
-        int reciever_id = this.transactionmodel.getReceiverId();
-        double sender_balance = 0;
+        // receiverId=0 indicates cash deposit; credit the senderId
+        int accountId = this.transactionmodel.getReceiverId() == 0
+                ? this.transactionmodel.getSenderId()
+                : this.transactionmodel.getReceiverId(); // backward compatible with older records
+
+        double currentBalance = 0;
         try {
-            sender_balance = userSearch.findUserById(reciever_id).getBalance();
+            currentBalance = userSearch.findUserById(accountId).getBalance();
         } catch (Exception e) {
-        
             e.printStackTrace();
         }
-        
+
         if(amount>0){
-            changeBalanceById.changeBalanceById(transactionmodel.getReceiverId(), sender_balance + this.amount);
+            changeBalanceById.changeBalanceById(accountId, currentBalance + this.amount);
             saveTrascationIntoFile.SaveTransaction();
-        }   
+        }
      }
 
 }

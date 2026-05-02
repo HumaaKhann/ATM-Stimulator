@@ -11,6 +11,9 @@ import java.io.IOException;
 
 public class miniStatement {
 
+    private static final int CASH_DEPOSIT_RECEIVER_ID = 0;
+    private static final int CASH_WITHDRAW_RECEIVER_ID = 1;
+
     public void showMiniStatement(int userId) {
 
         try {
@@ -34,12 +37,19 @@ public class miniStatement {
 
                 // Check if this transaction belongs to user
                 if (userId == senderId) {
-                    System.out.println("Withdrawn: " + amount +
-                            " To: " + receiverName +
-                            " | Time: " + timestamp);
-                } 
-                else if (userId == receiverId) {
-                    System.out.println("Deposited: " + amount +
+                    if (receiverId == CASH_DEPOSIT_RECEIVER_ID) {
+                        System.out.println("Deposited: " + amount +
+                                " | Time: " + timestamp);
+                    } else if (receiverId == CASH_WITHDRAW_RECEIVER_ID) {
+                        System.out.println("Withdrawn: " + amount +
+                                " | Time: " + timestamp);
+                    } else {
+                        System.out.println("Sent: " + amount +
+                                " To: " + receiverName +
+                                " | Time: " + timestamp);
+                    }
+                } else if (userId == receiverId) {
+                    System.out.println("Received: " + amount +
                             " From: " + senderName +
                             " | Time: " + timestamp);
                 }
