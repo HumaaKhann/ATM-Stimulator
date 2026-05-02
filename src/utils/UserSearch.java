@@ -9,8 +9,7 @@ public class UserSearch {
 
     public  usermodel findUserById(int searchId) {
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/user.txt"));
+        try (BufferedReader reader = new BufferedReader(new FileReader("data/user.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -27,8 +26,6 @@ public class UserSearch {
                     return new usermodel(id, name, pin, balance);
                 }
             }
-
-            reader.close();
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
