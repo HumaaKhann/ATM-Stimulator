@@ -1,16 +1,19 @@
 package utils;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class DeleteUserById {
 
     public void deleteUserById(int id) {
-        File inputFile = new File("data/user.txt");
-        File tempFile = new File("data/temp.txt");
+        Path inputPath = Path.of("data", "user.txt");
+        Path tempPath = Path.of("data", "temp-" + System.nanoTime() + ".txt");
 
         try (
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+            BufferedReader reader = Files.newBufferedReader(inputPath);
+            BufferedWriter writer = Files.newBufferedWriter(tempPath)
         ) {
             String line;
 
@@ -32,15 +35,37 @@ public class DeleteUserById {
 
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
-        // Replace old file with updated file
-        if (inputFile.delete()) {
-            if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Error renaming temp file.");
+        // Replace old file with updated file (more reliable on Windows than File#delete + renameTo)
+        try {
+            replaceWithRetry(tempPath, inputPath, 8, 80);
+        } catch (IOException e) {
+            System.out.println("Could not replace user file. Is it open in another program?");
+            try {
+                Files.deleteIfExists(tempPath);
+            } catch (IOException ignored) {
             }
-        } else {
-            System.out.println("Could not delete original file.");
         }
+    }
+
+    private static void replaceWithRetry(Path tempPath, Path inputPath, int attempts, long sleepMs) throws IOException {
+        IOException last = null;
+        for (int i = 0; i < attempts; i++) {
+            try {
+                Files.move(tempPath, inputPath, StandardCopyOption.REPLACE_EXISTING);
+                return;
+            } catch (IOException e) {
+                last = e;
+                try {
+                    Thread.sleep(sleepMs);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw e;
+                }
+            }
+        }
+        throw last;
     }
 }
