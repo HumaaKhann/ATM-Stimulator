@@ -48,7 +48,7 @@ public class Main {
     }
 
     static void prompt(String msg) {
-        System.out.print(YELLOW + "  ›  " + msg + RESET);
+        System.out.print(YELLOW + "  >  " + msg + RESET);
     }
 
     // ─────────────────────────────────────────────
@@ -58,7 +58,7 @@ public class Main {
     public static boolean login(int id, int pin) {
         try (BufferedReader br = new BufferedReader(new FileReader("data/user.txt"))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) { 
                 String[] data = line.split(",");
                 if (data.length < 3) continue;
                 int fileId  = Integer.parseInt(data[0].trim());
@@ -68,6 +68,7 @@ public class Main {
         } catch (Exception e) {
             error("Could not read user data.");
         }
+        
         return false;
     }
 
@@ -123,7 +124,8 @@ public class Main {
             System.out.println(          "  │  3.  Send Money                     │");
             System.out.println(          "  │  4.  Mini Statement                 │");
             System.out.println(          "  │  5.  Check Balance                  │");
-            System.out.println(          "  │  6.  Exit                           │");
+            System.out.println(          "  │  6.  Change PIN                     │");
+            System.out.println(          "  │  7.  Exit                           │");
             System.out.println(CYAN +    "  └─────────────────────────────────────┘" + RESET);
             System.out.println();
             prompt("Select option: ");
@@ -185,10 +187,10 @@ public class Main {
                     line();
                     break;
 
-                case 5:
-                    double balance = new UserFileUtil().checkBalance(id);
-                    if (balance >= 0) {
-                        System.out.println();
+	                case 5:
+	                    double balance = new UserFileUtil().checkBalance(id);
+	                    if (balance >= 0) {
+	                        System.out.println();
                         System.out.println(CYAN + BOLD +
                             "  ┌─────────────────────────────────────┐\n" +
                             "  │           ACCOUNT BALANCE           │\n" +
@@ -200,21 +202,55 @@ public class Main {
                     } else {
                         error("Could not retrieve balance.");
                     }
-                    line();
-                    break;
+	                    line();
+	                    break;
 
-                case 6:
-                    System.out.println();
-                    success("Session ended. Thank you, " + user.getName().toUpperCase() + "!");
-                    info("Please collect your card. Have a great day.");
-                    System.out.println();
-                    sc.close();
-                    return;
+	                case 6:
+                        System.out.println();
+                        prompt("Enter current PIN : ");
+                        String currentPin = sc.next();
 
-                default:
-                    error("Invalid option. Please choose 1–6.");
-                    line();
-            }
-        }
-    }
-}
+                        if (!currentPin.equals(user.getPin())) {
+                            error("Invalid current PIN.");
+                            line();
+                            break;
+                        }
+
+                        prompt("Enter new PIN (4 digits) : ");
+                        String newPin = sc.next();
+                        prompt("Confirm new PIN          : ");
+                        String confirmPin = sc.next();
+
+                        if (!newPin.equals(confirmPin)) {
+                            error("PINs do not match.");
+                            line();
+                            break;
+                        }
+
+                        if (!newPin.matches("\\d{4}")) {
+                            error("PIN must be exactly 4 digits.");
+                            line();
+                            break;
+                        }
+
+                        new ChangePinById().changePinById(id, newPin);
+                        user.setPin(newPin);
+                        success("PIN changed successfully.");
+                        line();
+                        break;
+
+	                case 7:
+	                    System.out.println();
+	                    success("Session ended. Thank you, " + user.getName().toUpperCase() + "!");
+	                    info("Please collect your card. Have a great day.");
+	                    System.out.println();
+	                    sc.close();
+	                    return;
+
+	                default:
+	                    error("Invalid option. Please choose 1–7.");
+	                    line();
+	            }
+	        }
+	    }
+	}

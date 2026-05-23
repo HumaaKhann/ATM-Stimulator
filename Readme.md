@@ -10,6 +10,7 @@ A console-based ATM simulator built in Java. It supports user login, deposits, w
 - **Deposit** — add funds to your account
 - **Withdraw** — deduct funds with balance validation
 - **Send Money** — transfer funds to another user by ID, with null-safety on the receiver
+- **Change PIN** — update your account PIN after verifying the current PIN
 - **Check Balance** — view your current balance in a formatted box
 - **Mini Statement** — colour-coded transaction history (green = credit, red = debit, yellow = sent)
 - **Styled UI** — ANSI box-drawing characters, colour-coded prompts, success/error indicators throughout
